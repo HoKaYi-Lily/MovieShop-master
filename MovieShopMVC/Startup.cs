@@ -1,4 +1,5 @@
 using ApplicationCore.ServiceInterface;
+using Infrastructure.Data;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -10,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace MovieShopMVC
 {
@@ -20,7 +22,7 @@ namespace MovieShopMVC
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        public IConfiguration Configuration { get; } //use this to read the json file
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -28,7 +30,11 @@ namespace MovieShopMVC
             services.AddControllersWithViews();
             //configure services, tell asp.net code which class to inject for each interface
             services.AddScoped<IMovieService, MovieServiceTest>();
-                //tell Imovieservices please inject new instance of movieservice class
+            //tell Imovieservices please inject new instance of movieservice class
+
+            services.AddDbContext<MovieShopDbContext>(
+                options => options.UseSqlServer(Configuration.GetConnectionString("MovieShopDbConnection"))
+                );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,7 +55,7 @@ namespace MovieShopMVC
 
             app.UseRouting();
 
-            app.UseAuthorization();  
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
