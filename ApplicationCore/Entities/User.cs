@@ -17,11 +17,11 @@ namespace ApplicationCore.Entities
 
         public string Salt { get; set; }
         public string PhoneNumber { get; set; }
-        public bool TwoFactorEnabled { get; set; }
+        public bool? TwoFactorEnabled { get; set; }
         public DateTime? LockoutEndDate { get; set; }
         public DateTime? LastLoginDateTime { get; set; }
-        public bool IsLocked { get; set; }
-        public int AccessFailedCount { get; set; }
+        public bool? IsLocked { get; set; }
+        public int? AccessFailedCount { get; set; }
 
         //try put bool? and int? the next time you try it, maybe this will make islocked null
         public ICollection<Purchase> Purchases { get; set; }
