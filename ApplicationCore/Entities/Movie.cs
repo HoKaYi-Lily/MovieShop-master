@@ -43,7 +43,7 @@ namespace ApplicationCore.Entities
         public ICollection<Purchase> Purchases { get; set; }
         public ICollection<Review> Reviews { get; set; }
         //movie have access to movie crew
-
+        //no movie genre collection
         public ICollection<Favorite> Favorites { get; set; }
 
     }

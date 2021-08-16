@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using ApplicationCore.RepositoryInterfaces;
+using Infrastructure.Repositories;
 
 namespace MovieShopMVC
 {
@@ -29,12 +31,14 @@ namespace MovieShopMVC
         {
             services.AddControllersWithViews();
             //configure services, tell asp.net code which class to inject for each interface
-            services.AddScoped<IMovieService, MovieServiceTest>();
+            services.AddScoped<IMovieService, MovieService>();
             //tell Imovieservices please inject new instance of movieservice class
+            services.AddScoped<IMovieRepository, MovieRepository>();
 
             services.AddDbContext<MovieShopDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("MovieShopDbConnection"))
                 );
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

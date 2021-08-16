@@ -11,7 +11,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MovieShopMVC</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MovieShop</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -29,9 +29,12 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container-fluid mt-1">
         <main role="main" class="pb-3">
             @RenderBody()
+
+            @*placeholder for individal view
+            the html view will be render here, not need to recreate the layout each and everytime*@
         </main>
     </div>
 
@@ -46,3 +49,7 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+@*bootstrap responsive mobile first sites means doesnt matter which screensize
+
+@model queries cs, use bootstrap components*@  

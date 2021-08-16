@@ -31,8 +31,6 @@ namespace Infrastructure.Data
 
         public DbSet<Crew> Crew { get; set; }
 
-        public DbSet<Genre> Genre { get; set; }
-
         public DbSet<MovieCast> MovieCast { get; set; }
 
         public DbSet<MovieCrew> MovieCrew { get; set; }
@@ -51,10 +49,15 @@ namespace Infrastructure.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            //this method declare the relationship already, so they do not need Icollection
             modelBuilder.Entity<Movie>().HasMany(m => m.Genres).WithMany(g => g.Movies)
                 .UsingEntity<Dictionary<string, object>>("MovieGenre",
                 m => m.HasOne<Genre>().WithMany().HasForeignKey("GenreId"),
                 g => g.HasOne<Movie>().WithMany().HasForeignKey("MovieId"));
+
+            //why I did not write genre modek build but it built me a genre table>
+
+            //why dictionary <string, object> please check later..
             //many to many control is weird like that ^^
             modelBuilder.Entity<Movie>(ConfigureMovie);
             modelBuilder.Entity<Trailer>(ConfigureTrailer);
@@ -151,7 +154,7 @@ namespace Infrastructure.Data
             //has one crew can be in many movie crew
             //Fk_moviecrew_movie_movieId
             //many to many table
-        
+        //Movie -- 
         }
 
         private void ConfigureCrew(EntityTypeBuilder<Crew> builder) {

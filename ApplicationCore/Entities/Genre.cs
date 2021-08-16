@@ -16,8 +16,10 @@ namespace ApplicationCore.Entities
 
         [MaxLength(64)]
         public string Name { get; set; }
-
+        //[required] not null
         public ICollection<Movie> Movies { get; set; }
+        //we need this for many to many relationships
+        //didn't make a table fore genre, data annotation 
 
 
     }

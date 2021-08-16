@@ -1,0 +1,35 @@
+﻿@model ApplicationCore.Models.MovieCardResponseModel
+@*parent that it sending , bind it*@
+
+
+<div class="card mb-4">
+    <a asp-controller="Movies" asp-action="Details" asp-route-id="@Model.Id">
+        <img src="@Model.PosterUrl" class="img-fluid" alt="@Model.Title" />
+    </a>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*single movie card object, rending here
+    alt text is accessbility who cant see this website, read the html site, achor tab routing to movie html page,using the controller (asp-controller)
+       it is part of the mvc (they are tag helper for html page) broweser do not understand it
+        and will convert it to bootstrap - local/host/controlname/ 
+            asp-route-id would be depending on the parameter [id] the id should be dynamic same as the moviecontrolelr id paramtere name *@
+
+@*won't change partial view but its up to the parent view to send the actual data, different controllerm same UI, data changes
+    depends on which action method we are using, *@

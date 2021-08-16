@@ -28,5 +28,8 @@ namespace ApplicationCore.Entities
         public ICollection<Review> Reviews { get; set; }
         public ICollection<Favorite> Favorites { get; set; }
         public ICollection<UserRole> UserRoles { get; set; }
+
+        //if I add I collection here do I need to add migration> 
+        //does it changes the accessbilities to database?
     }
 }

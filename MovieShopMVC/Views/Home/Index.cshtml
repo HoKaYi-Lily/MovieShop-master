@@ -4,29 +4,65 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+<div class="rounded">
+    <div class="container-fluid bg-light">
+        <div class="row">
+            @foreach (var movie in Model)
+            {
+                <div class="col-6 col-lg-3 col-sm-4 col-xl-2">
+                    @await Html.PartialAsync("_MovieCard", movie);
+                </div>
+            }
+        </div>
+    </div>
+
 </div>
 
-<h1>
-    @ViewBag.PageTitle
-</h1>
 
-<h3>
-    Total Top Movies: @ViewData["TotalMovies"] 
-</h3>
 
-<div>
+
+@*tag helper help you navigate from one to another*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*need to make sure it use the partial view*@
+
+@*<div>
     <ul>
-    @foreach (var movie in Model)
-    { 
-        <li>
-            @movie.Id <br />
-            @movie.Title
-        </li>
-    
-    }
+        @foreach (var movie in Model)
+        {
+             @await Html.PartialAsync("_MovieCard", movie)
 
+            //viewname and model object
+        }
     </ul>
-</div>
+</div>*@
+
+@*for each and every individual movie, passing in the movie object partial view 
+calling the partial view name 
+and the data it send, 30 partial view, individual movie card will be in the partial view
+30 partial view*@

@@ -10,7 +10,7 @@ namespace ApplicationCore.ServiceInterface
     public interface IMovieService
     {
         //model calling , pick them from entities
-        List<MovieCardResponseModel> GetTopRevenueMovies();
+        Task<List<MovieCardResponseModel>> GetTopRevenueMovies();
         //contractor interfaces and implementation
     }
 }
