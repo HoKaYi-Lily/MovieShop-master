@@ -18,15 +18,20 @@ namespace Infrastructure.Repositories
         //we can not make any changes unless we are making it in constructor
         //changes the instances in the constructor
 
+        //this is an instance constructor, not an instance, _dbcontext is a field
+        // but not an instance, and pass value from dbcontext to _dbContext , save some value call MovieShopDbContext 
         public EfRepository(MovieShopDbContext dbContext)
         {
             _dbContext = dbContext;
             //passing the connection string?
         }
 
-        public Task<T> AddAsync(T entity)
+        public async Task<T> AddAsync(T entity)
         {
-            throw new NotImplementedException();
+            await _dbContext.Set<T>().AddAsync(entity);
+            await _dbContext.SaveChangesAsync();
+            //inserting and commiting to database
+            return entity;
         }
 
         public Task<T> DeleteAsync(T entity)
@@ -40,6 +45,8 @@ namespace Infrastructure.Repositories
             var entity = await _dbContext.Set<T>().FindAsync(id);
 
             return entity;
+            //need to override, because this will only give us movie detail information
+            //but we need to get information from other table also
         }
         //we have to make it virtual because sometimes the base class code does not satisfy our needs
         //can override this method and implement our implementation

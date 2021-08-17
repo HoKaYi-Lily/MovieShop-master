@@ -17,6 +17,57 @@ namespace Infrastructure.Services
             _movieRepository = movieRepository;
             //giving the getted instance to the private_movierepository variable with DI's help
         }
+
+        public async Task<MovieDetailResponseModel> GetMovieDetails(int id)
+        {
+            //call this method from movie controller 
+            var movie = await _movieRepository.GetByIdAsync(id);
+            //return type should be MovieDetailresponsemodel, but we have entity return now, 
+            //so we have to map it
+
+            var movieDetailsModel = new MovieDetailResponseModel
+            {
+                Id = movie.Id,
+                Title = movie.Title,
+                Overview = movie.Overview,
+                Tagline = movie.Tagline,
+                Budget = movie.Budget,
+                Revenue = movie.Revenue,
+                ImdbUrl = movie.ImdbUrl,
+                TmdbUrl = movie.TmdbUrl,
+                PosterUrl = movie.PosterUrl,
+                BackdropUrl = movie.BackdropUrl,
+                OriginalLanguage = movie.OriginalLanguage,
+                ReleaseDate = movie.ReleaseDate,
+                RunTime = movie.RunTime,
+                Price = movie.Price,
+                Rating = movie.Rating
+                //moviedetailresponsemodel have the list<moviedetailrespinsemodel> for casts and genres
+            };
+            movieDetailsModel.Casts = new List<CastResponseModel>();
+
+            foreach (var cast in movie.MovieCasts)
+            {
+                movieDetailsModel.Casts.Add(new CastResponseModel
+                {
+                    Id = cast.CastId,
+                    Name = cast.Cast.Name,
+                    Gender = cast.Cast.Gender,
+                    ProfilePath = cast.Cast.ProfilePath,
+                    Character = cast.Character
+                }); //need to fill up remaining properties 
+            }
+
+            movieDetailsModel.Genres = new List<GenreResponseModel>();
+
+            foreach (var genre in movie.Genres)
+            {
+                movieDetailsModel.Genres.Add(new GenreResponseModel { Id = genre.Id, Name = genre.Name });
+            }
+
+            return movieDetailsModel;
+        }
+
         public async Task<List<MovieCardResponseModel>> GetTopRevenueMovies()
         {
             //call repositories and get the real data from database

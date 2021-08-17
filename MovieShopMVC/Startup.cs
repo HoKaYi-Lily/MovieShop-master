@@ -34,6 +34,9 @@ namespace MovieShopMVC
             services.AddScoped<IMovieService, MovieService>();
             //tell Imovieservices please inject new instance of movieservice class
             services.AddScoped<IMovieRepository, MovieRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IUserService, UserService>();
+            
 
             services.AddDbContext<MovieShopDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("MovieShopDbConnection"))

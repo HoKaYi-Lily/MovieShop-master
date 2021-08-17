@@ -29,20 +29,19 @@ namespace Infrastructure.Data
         public DbSet<Cast> Casts { get; set; }
         //override onm
 
-        public DbSet<Crew> Crew { get; set; }
+        public DbSet<Crew> Crews { get; set; }
 
-        public DbSet<MovieCast> MovieCast { get; set; }
+        public DbSet<MovieCast> MovieCasts { get; set; }
 
-        public DbSet<MovieCrew> MovieCrew { get; set; }
+        public DbSet<MovieCrew> MovieCrews { get; set; }
 
-        public DbSet<Purchase> Purchase { get; set; }
-        public DbSet<Review> Review { get; set; }
-        public DbSet<Role> Role { get; set; }
-        public DbSet<Trailer> Trailer { get; set; }
-        public DbSet<User> User { get; set; }
+        public DbSet<Purchase> Purchases { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<User> Users { get; set; }
 
-        public DbSet<UserRole> UserRole { get; set; }
-        public DbSet<Favorite> Favorite { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<Favorite> Favorites { get; set; }
         
         //please update all the sets in the end
         //what is it for anyway?

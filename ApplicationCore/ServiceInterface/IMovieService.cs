@@ -12,5 +12,7 @@ namespace ApplicationCore.ServiceInterface
         //model calling , pick them from entities
         Task<List<MovieCardResponseModel>> GetTopRevenueMovies();
         //contractor interfaces and implementation
+
+        Task<MovieDetailResponseModel> GetMovieDetails(int id);
     }
 }
