@@ -14,5 +14,8 @@ namespace ApplicationCore.Models
         public string ProfilePath { get; set; }
 
         public string Character { get; set; }
+        //where do we use this character
+
+        public List<MovieDetailResponseModel> Movies { get; set; }
     }
 }

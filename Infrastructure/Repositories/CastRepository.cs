@@ -19,9 +19,21 @@ namespace Infrastructure.Repositories
         {
             var cast = await _dbContext.Casts.Where(c => c.Id == id).Include(c => c.MovieCasts)
                                        .ThenInclude(c => c.Movie).FirstOrDefaultAsync();
+
+            if (cast == null)
+            {
+                throw new Exception($"No Cast Found for the id {id}");
+            }
+
+
             return cast;
 
 
+        }
+
+        public Task getCastDetails(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

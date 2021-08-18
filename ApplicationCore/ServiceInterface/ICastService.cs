@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ApplicationCore.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.ServiceInterface
 {
-    class ICastService
+    public interface ICastService
     {
+        Task<CastResponseModel> GetCastDetails(int id);
     }
 }

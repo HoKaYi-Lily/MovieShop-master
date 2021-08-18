@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace ApplicationCore.RepositoryInterfaces
 {
-    public interface ICastRepository:IAsyncRepository<Cast>
+    public interface ICastRepository : IAsyncRepository<Cast>
     {
-     
-       // Task<IEnumerable<Cast>> ListAllAsync();
-       //we do not have to do list since they already have it?
-       //need to find movie, moviecast (movie id, cast id), cast 
+
+        // Task<IEnumerable<Cast>> ListAllAsync();
+        //we do not have to do list since they already have it?
+        //need to find movie, moviecast (movie id, cast id), cast 
+        Task getCastDetails(int id);
     }
 }
