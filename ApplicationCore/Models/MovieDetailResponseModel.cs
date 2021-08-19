@@ -32,3 +32,4 @@ namespace ApplicationCore.Models
 //need movie genre and moviecast
 
 //moviedetail, genre and cast 
+//make some changes 
