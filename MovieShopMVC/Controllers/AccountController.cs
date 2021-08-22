@@ -80,6 +80,23 @@ namespace MovieShopMVC.Controllers
 
             return RedirectToAction("Login");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout(string returnUrl= null)
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            //why do we need to return URL?
+            if (returnUrl != null)
+            {
+                return LocalRedirect(returnUrl);
+            }
+            else
+            {
+                return LocalRedirect("~/");
+            }
+
+
+        }
     }
 }
 

@@ -13,5 +13,14 @@ namespace ApplicationCore.RepositoryInterfaces
         Task<User> GetFavoriteMovies(int id);
         Task<User> GetPurchasedMovies(int id);
         //getting the user record, and registration log in, get the one single record of the user , 
+
+        Task<User> GetProfile(int id);
+        Task<User> EditProfile();
+
+        Task<User> BuyMovie();
+
+       // Task<User> FavoriteMovie();
+    
+    
     }
 }

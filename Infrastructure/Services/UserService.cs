@@ -41,6 +41,20 @@ namespace Infrastructure.Services
             return movieCards;
         }
 
+        public async Task<ProfileResponseModel> GetProfile(int userId)
+        {
+            var user = await _userRepository.GetProfile(userId);
+
+            var ProfileResponseModel = new ProfileResponseModel
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email
+            };
+            return ProfileResponseModel;
+        }
+
         public async Task<IEnumerable<MovieCardResponseModel>> GetPurchasedMovies(int userId)
         {
             var user = await _userRepository.GetPurchasedMovies(userId);
@@ -89,6 +103,7 @@ namespace Infrastructure.Services
             //or through an exception later
         }
 
+        
         public async Task<UserRegisterResponseModel> RegisterUser(UserRegisterRequestModel model)
         {
             //make sure with the user entered email does not exists in database.

@@ -1,41 +1,61 @@
 ﻿@model ApplicationCore.Models.CastResponseModel
 
-<div class="container-fluid bg-light">
-    <div class="row">
-        <div class="col-3">
-            <div>
-                <img src="@Model.ProfilePath" class="img-fluid" alt="@Model.Name" />
-                
-            </div>
-        </div>
-        <div class="col-3">
-            <h1>@Model.Name</h1>
-        </div>
-        <div class="col-2">
-            <h6>@Model.Id</h6>
-            <h4>
-                <a>
-                    @if (Model.Gender == "1")
-                    {<h3>Female</h3> }
-                    else
-                    { <h3>Male </h3>}
-                </a>
-            </h4>
-        </div>
+<div class="row">
+    <div class="col-2; rounded mx-auto d-block" >
+        <img src="@Model.ProfilePath" class="img-fluid" alt="@Model.Name" />
+    </div>
+    <div class="col-12 text-center">
+        <h1> @Model.Name</h1>
+        <span>
+            Gender:
+            @if (Model.Gender == "1")
+            {<span> Female</span>}
+            else
+            { <span> Male</span>}
+        </span>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="card bg-transparent" style="width:800px; margin:0 auto ">
+        <div class="card card-header bg-transparent text-left" style="font:bold; font-size: x-large">MOVIES</div>
+        @foreach (var movie in Model.Movies)
+        {
+            <ul class="list-group list-group-horizontal">
+                <li class="list-group-item col-2">
+                    <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">
+                        <img src="@movie.PosterUrl" class="img-fluid" alt="@movie.Title" />
+                    </a>
+                </li>
+                <li class="list-group-item col-10" style="font:bold; font-size:large">
+                    @movie.Title
+                </li>
+            </ul>
+
+        }
+
     </div>
 </div>
 
-<div class="card bg-dark">
 
-    @foreach (var movie in Model.Movies)
-    {
-        <ul class="list-group list-group-horizontal">
-            <li class="list-group-item">
-            <a asp-controller="Movies" asp-action="Details" asp-route-id="@movie.Id">
-                <img src="@movie.PosterUrl" class="img-fluid" alt="@movie.Title" />
-             </a>
-            </li>
-            <li class="list-group-item">@movie.Title</li>
-        </ul>
-    }
-</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

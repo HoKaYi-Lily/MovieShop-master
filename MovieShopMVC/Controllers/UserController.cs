@@ -46,7 +46,9 @@ namespace MovieShopMVC.Controllers
       
         public async Task<IActionResult> GetProfile()
         {
-            return View();
+            var userId = _currentUserService.UserId;
+            var user = await _userService.GetProfile(userId);
+            return View(user);
         }
 
       

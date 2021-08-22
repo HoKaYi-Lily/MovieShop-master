@@ -1,104 +1,156 @@
 ﻿@model ApplicationCore.Models.MovieDetailResponseModel
 
-
-    <div class="container-fluid bg-dark">
+<div class="bg-image" style="background-image:url(@Model.BackdropUrl); align-content:center; background-size:120%">
+    <div class="mask" style="background-color: rgba(0,0,0.8)">
         <div class="row">
-        
-            <div class="col-4 ">
-                <img src=@Model.PosterUrl />
+            <div class="col-md-3 offset-2">
+                <div>
+                    <img src="@Model.PosterUrl" class="card-img-top" />
+                </div>
             </div>
-            <div class="col-4">
-               
+            <div class="col-md-4">
+                @*md medium desktop*@
+                <div class="row mt-2">
+                    @*margin top*@
+                    <div class="col-12">
                         <h1 class="text-white">
                             @Model.Title
                         </h1>
                         <small class="text-muted">@Model.Tagline</small>
-                   
-              
-                <div class="row">
-                    <div class="col-4 text-secondary">
-                        @Model.RunTime m | @Model.ReleaseDate.Value.Date.Year
-                    </div>
-                    <div class="col-6">
-                        @foreach (var genre in Model.Genres)
-                        {
-                        <span class="badge badge-primary">@genre.Name</span>
-                        }
-                    </div>
-                    <div>
-                        <h3>
-                            <span class="badge badge-warning">
-                                @Model.Rating
-                            </span>
-                        </h3>
-                    </div>  
-                    <div class="row">
-                        <div class="col-12 text-light ">
-                            @Model.Overview
-                        </div>
                     </div>
                 </div>
-
+                <div class="row">
+                    <div class="col-4 text-secondary font-weight-bold mt-2">
+                        @Model.RunTime min | @Model.ReleaseDate.Value.Date.Year
+                    </div>
+                    <div class="Col-8">
+                        @foreach (var genre in Model.Genres)
+                        {
+                            <a class="badge badge-pill badge-dark m1-1"
+                               asp-controller="Genres" asp-action="Index">
+                                @genre.Name
+                            </a>
+                            //orginally controller directory should go action="Details" asp-route-id="@genre,Id"
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4 mt-3">
+                        <h4>
+                            <span class="badge badge-warning">
+                                @Model.Rating?.ToString("0.00")
+                            </span>
+                        </h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 text-light mt-2">
+                        @Model.Overview
+                    </div>
+                </div>
             </div>
-            <div class="col-3">
-                <ul class="list-group"> 
-                    <li class="list-group-item">
-                        <button type="button" class="btn btn-secondary">REVIEW</button>
+
+            <div class="col-md-2 mt-4 offset-1 bg-transparent">
+                <ul class="list-group">
+                    <li class="list-group-item bg-transparent">
+
                     </li>
-                    <li class="list-group-item">
-                        <button type="button" class="btn btn-secondary">TRAILER</button>
+                    <li class="list-group-item bg-transparent">
+                        <button type="button" class="btn btn-outline-light btn-lg btn-block btn-sm">
+                            Review
+                        </button>
+                    <li class="list-group-item bg-transparent">
+                        <button type="button" class="btn btn-outline-light btn-lg btn-block btn-sm">
+                            Trailer
+                        </button>
                     </li>
 
-                    <li class="list-group-item">
-                        <button type="button" class="btn btn-light">BUY @Model.Price</button><br />
+                    <li class="list-group-item bg-transparent">
+                        <a class="btn btn-light btn-lg btn-block btn-sm"
+                           asp-route-id="@Model.Id" asp-controller="User" asp-action="BuyMovie">
+                            BUY @Model.Price
+                        </a>
+                        <a class="btn btn-light btn-lg btn-block btn-sm"
+                           asp-route-id="@Model.Id" asp-controller="User" asp-action="BuyMovie">
+                            WATCH MOVIE
+                        </a>
 
-                        <button type="button" class="btn btn-light">WATCH MOVIE</button>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="container-fluid bg-light">
+<div class="row mt-4 float-left">
+    <div class="col-4">
+        <h5> MOVIE FACTS</h5>
+    </div>
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+            Release Date
+            <span class="badge badge-pill badge-dark">
+                <i class="far fa-calendar-alt mr-2">@Model.ReleaseDate.Value.ToShortDateString()</i>
+            </span>
+        </li>
 
-        <div class="row">
-           
-            <div class="col-4">
-                <div class="card">
-                    <div class="card-header">
-                        MOVIE FACTS
-                    </div>
-                    <div class="list-group" id="list-tab" role="tablist">
-                        <a class="list-group-item list-group-item-action active">Release Date <span class="badge badge-pill badge-dark">@Model.ReleaseDate</span></a>
-                        <a class="list-group-item list-group-item-action">Run Time <span class="badge badge-pill badge-dark">@Model.RunTime</span></a>
-                        <a class="list-group-item list-group-item-action">Box Office <span class="badge badge-pill badge-dark">@Model.RunTime</span></a>
-                        <a class="list-group-item list-group-item-action">Budget <span class="badge badge-pill badge-dark">@Model.Budget</span></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-8">
-                <div class="card">
-                    <div class="card-header">
-                        CAST
-                    </div>
-                    @foreach (var cast in Model.Casts)
-                    {
-                        <div class="list-group" id="list-tab" role="tablist">
-                            <ul>
-                                <li class="list-group-item list-group-item-action">
-                                    <a asp-controller="Cast" asp-action="Details" asp-route-id="@cast.Id">
-                                        <img src="@cast.ProfilePath" class="img-fluid" alt="@cast.Name" />
-                                    </a>
-                                </li>
-                                <li class="list-group-item list-group-item-action">@cast.Name</li>
-                                <li class="list-group-item list-group-item-action">@cast.Character</li>
-                            </ul>
-                           
-                        </div>
-                    }
+        <li class="list-group-item">
+            Run Time
+            <span class="badge badge-pill badge-dark">
+                <i class="fas fa-hourglass-half mr-2">@Model.RunTime min</i>
+            </span>
+        </li>
+        <li class="list-group-item">
+            Box Office
+            <span class="badge badge-pill badge-dark">
+                @Model.Revenue?.ToString("C0")
+            </span>
+        </li>
+        <li class="list-group-item">
+            Budget
+            <span class="badge badge-pill badge-dark">
+                @Model.Budget?.ToString("C0")
+            </span>
+        </li>
 
-                </div>
-            </div>
-            </div>
+        <li class="list-group-item">
+            <i class="fab fa-imdb">Please Click Below to View IMDb Trailers</i>
+
+            <a href=@Model.ImdbUrl
+               class="text-dark ml-3"
+               target="_blank">
+                <i class="fas fa-share-square mr-2">Trailers Here</i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<div class="col-8">
+    <div class="card" style="border:hidden">
+        <div class="card-header bg-transparent" style="font:bold; font-size:xx-large">
+            CAST
         </div>
+        @foreach (var cast in Model?.Casts)
+        {
+            <ul class="list-group list-group-horizontal">
+                <li class="list-group-item " style="border-left:hidden; border-right:hidden;">
+                    <a asp-controller="Cast" asp-action="Details" asp-route-id="@cast.Id">
+                        <img src=@cast.ProfilePath
+                             class="cast-small-img rounded-circle"
+                             alt="@cast.Name"
+                             height="120" />
+                    </a>
+                </li>
+                <li class="list-group-item col-4" style="border-left:hidden; border-right: hidden">
+                    @cast.Name
+                </li>
+                <li class="list-group-item col-6" style="border-left:hidden; border-right:hidden;">
+                    @cast.Character
+                </li>
+            </ul>
+        }
+
+    </div>
+</div>
+
 

@@ -14,5 +14,9 @@ namespace ApplicationCore.ServiceInterface
         Task<UserLoginResponseModel> Login(LoginRequestModel model);
         Task<IEnumerable<MovieCardResponseModel>> GetPurchasedMovies(int userId);
         Task<IEnumerable<MovieCardResponseModel>> GetFavoriteMovies(int userId);
+
+        Task<ProfileResponseModel> GetProfile(int userId);
+
+        //Editprofile, buymovie... etc 
     }
 }
