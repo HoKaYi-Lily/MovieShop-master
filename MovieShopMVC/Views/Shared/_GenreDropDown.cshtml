@@ -1,0 +1,6 @@
+﻿@inject ApplicationCore.ServiceInterface.IGenreService _generService
+
+@foreach (var genre in await _generService.GetAllGenres())
+{
+<a class="dropdown-item" href="#">@genre.Name</a>//Redirect to a new page?? on each genere
+}

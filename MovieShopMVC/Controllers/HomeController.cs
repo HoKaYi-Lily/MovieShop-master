@@ -13,7 +13,7 @@ namespace MovieShopMVC.Controllers
 {
     public class HomeController : Controller
     {
-       //private readonly ILogger<HomeController> _logger;
+       private readonly ILogger<HomeController> _logger;
 
         private IMovieService _movieService;
         //here call the movie service
@@ -28,6 +28,7 @@ namespace MovieShopMVC.Controllers
 
         public async Task<IActionResult> Index()
         {
+            //throw new Exception("some exception happened");
             //movieservice returning a task, so we should change this to task from  public IActionResult Index()
             var movieCards = await _movieService.GetTopRevenueMovies();
             return View(movieCards);

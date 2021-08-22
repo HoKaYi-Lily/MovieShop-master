@@ -23,5 +23,22 @@ namespace Infrastructure.Repositories
             var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
             return user;
         }
+
+        public async Task<User> GetFavoriteMovies(int userId)
+        {
+            var user = await _dbContext.Users.Include(u => u.Favorites).ThenInclude(u => u.Movie)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+            //it connect to user>favourite>movie then use userId what>>?? why how, do they locate the userid first, or connect all graph first
+            return user;
+        
+        }
+
+        public async Task<User> GetPurchasedMovies(int userId)
+        {
+            var user = await _dbContext.Users.Include(u => u.Purchases).ThenInclude(u => u.Movie)
+                .FirstOrDefaultAsync(u => u.Id == userId);
+            return user;
+           // throw new NotImplementedException();
+        }
     }
 }

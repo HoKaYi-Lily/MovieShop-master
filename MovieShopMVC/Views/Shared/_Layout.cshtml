@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject ApplicationCore.ServiceInterface.ICurrentUserService _currentUserService
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -24,6 +26,28 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+
+                    </ul>
+                    <ul class="nav justify-content-lg-end">
+                        <li class="nav-item">
+
+                            @{ var userId = _currentUserService.UserId;
+
+                                if (userId == 0)
+                                {
+
+                                    <button type="button" class="btn btn-link">
+                                        <a asp-controller="Account" asp-action="Login">Login </a>
+                                    </button> 
+                                 }
+                                else
+                                {
+
+                                    <a class="nav-link active" aria-current="page" href="#"> Welcome back, @_currentUserService.FullName</a>
+                                 } 
+                             }
+
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -34,7 +58,7 @@
             @RenderBody()
 
             @*placeholder for individal view
-            the html view will be render here, not need to recreate the layout each and everytime*@
+                the html view will be render here, not need to recreate the layout each and everytime*@
         </main>
     </div>
 
@@ -52,4 +76,4 @@
 
 @*bootstrap responsive mobile first sites means doesnt matter which screensize
 
-@model queries cs, use bootstrap components*@  
+    @model queries cs, use bootstrap components*@  

@@ -82,7 +82,7 @@ namespace Infrastructure.Services
             }
             //so we are sepreately putting entity and model for different backend and frontend usage??
             return movieCards;
-        }
+         }
 
         //public getdetails() {}
     }

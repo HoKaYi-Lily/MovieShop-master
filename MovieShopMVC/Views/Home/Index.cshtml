@@ -1,18 +1,27 @@
 ﻿@model List<ApplicationCore.Models.MovieCardResponseModel>
 
-@{
-    ViewData["Title"] = "Home Page";
-}
 
+@{ ViewData["Title"] = "Home Page"; }
+
+
+
+<div class="btn-group">
+    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Genre
+    </button>
+        <div class="dropdown-menu">
+                @await Html.PartialAsync("_GenreDropDown");
+        </div>
+</div>
 
 <div class="rounded">
     <div class="container-fluid bg-light">
         <div class="row">
             @foreach (var movie in Model)
             {
-                <div class="col-6 col-lg-3 col-sm-4 col-xl-2">
-                    @await Html.PartialAsync("_MovieCard", movie);
-                </div>
+                    <div class="col-6 col-lg-3 col-sm-4 col-xl-2">
+                        @await Html.PartialAsync("_MovieCard", movie);
+                    </div>      
             }
         </div>
     </div>
@@ -52,17 +61,17 @@
 @*need to make sure it use the partial view*@
 
 @*<div>
-    <ul>
-        @foreach (var movie in Model)
-        {
-             @await Html.PartialAsync("_MovieCard", movie)
+        <ul>
+            @foreach (var movie in Model)
+            {
+                 @await Html.PartialAsync("_MovieCard", movie)
 
-            //viewname and model object
-        }
-    </ul>
-</div>*@
+                //viewname and model object
+            }
+        </ul>
+    </div>*@
 
-@*for each and every individual movie, passing in the movie object partial view 
-calling the partial view name 
-and the data it send, 30 partial view, individual movie card will be in the partial view
-30 partial view*@
+@*for each and every individual movie, passing in the movie object partial view
+    calling the partial view name
+    and the data it send, 30 partial view, individual movie card will be in the partial view
+    30 partial view*@

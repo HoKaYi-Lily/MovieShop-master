@@ -22,6 +22,44 @@ namespace Infrastructure.Services
             _userRepository = userRepository;
         }
 
+        public async Task<IEnumerable<MovieCardResponseModel>> GetFavoriteMovies(int userId)
+        {
+            var user = await _userRepository.GetFavoriteMovies(userId);
+
+            var movieCards = new List<MovieCardResponseModel>();
+
+            foreach (var movie in user.Favorites)
+            {
+                movieCards.Add(new MovieCardResponseModel
+                {
+                    Id = movie.Id,
+                    Title = movie.Movie.Title,
+                    PosterUrl = movie.Movie.PosterUrl
+
+                });
+            }
+            return movieCards;
+        }
+
+        public async Task<IEnumerable<MovieCardResponseModel>> GetPurchasedMovies(int userId)
+        {
+            var user = await _userRepository.GetPurchasedMovies(userId);
+
+            var movieCards = new List<MovieCardResponseModel>();
+
+            foreach (var movie in user.Purchases)
+            {
+                movieCards.Add(new MovieCardResponseModel
+                {
+                    Id = movie.Id,
+                    Title = movie.Movie.Title,
+                    PosterUrl = movie.Movie.PosterUrl
+
+                });
+            }
+            return movieCards;
+        }
+
         public async Task<UserLoginResponseModel> Login(LoginRequestModel model)
         {
             var dbUser = await _userRepository.GetUserByEmail(model.Email);
@@ -74,7 +112,8 @@ namespace Infrastructure.Services
             {
                 Email = model.Email, 
                 FirstName = model.FirstName,
-                LastName = model.LastName, 
+                LastName = model.LastName,
+                DateOfBirth = model.DateOfBirth,
                 Salt = salt,
                 HashedPassword = hashedPassword
             };
