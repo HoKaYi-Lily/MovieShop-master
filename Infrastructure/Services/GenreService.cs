@@ -59,16 +59,16 @@ namespace Infrastructure.Services
                 Name = genre.Name
             };
 
-            genreDetails.Movies = new List<MovieCardResponseModel>();
-            foreach (var movie in genre.Movies)
-            {
-                genreDetails.Movies.Add(new MovieCardResponseModel
-                {
-                    Id = movie.Id,
-                    Title = movie.Title,
-                    PosterUrl = movie.PosterUrl
-                });
-            }
+            //genreDetails.Movies = new List<MovieCardResponseModel>();
+            //foreach (var movie in genre.Movies)
+            //{
+            //    genreDetails.Movies.Add(new MovieCardResponseModel
+            //    {
+            //        Id = movie.Id,
+            //        Title = movie.Title,
+            //        PosterUrl = movie.PosterUrl
+            //    });
+            //}
 
             return genreDetails;
 
