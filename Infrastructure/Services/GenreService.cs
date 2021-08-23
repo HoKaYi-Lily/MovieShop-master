@@ -49,5 +49,29 @@ namespace Infrastructure.Services
             }
             return genresModel;
         }
+
+        public async Task<GenreResponseModel> GetGenreDetails(int id)
+        {
+            var genre = await _genreRepository.GetByIdAsync(id);
+            var genreDetails = new GenreResponseModel()
+            {
+                Id = genre.Id,
+                Name = genre.Name
+            };
+
+            genreDetails.Movies = new List<MovieCardResponseModel>();
+            foreach (var movie in genre.Movies)
+            {
+                genreDetails.Movies.Add(new MovieCardResponseModel
+                {
+                    Id = movie.Id,
+                    Title = movie.Title,
+                    PosterUrl = movie.PosterUrl
+                });
+            }
+
+            return genreDetails;
+
+        }
     }
 }

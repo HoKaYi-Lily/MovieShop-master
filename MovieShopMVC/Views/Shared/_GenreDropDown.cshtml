@@ -2,5 +2,5 @@
 
 @foreach (var genre in await _generService.GetAllGenres())
 {
-<a class="dropdown-item" href="#">@genre.Name</a>//Redirect to a new page?? on each genere
+<a class="dropdown-item" asp-controller="Genres" asp-action="Details" asp-route-id="@genre.Id">@genre.Name</a>//Redirect to a new page?? on each genere
 }

@@ -43,7 +43,7 @@ namespace MovieShopMVC.Controllers
             return View(movieCards);
         }
 
-      
+
         public async Task<IActionResult> GetProfile()
         {
             var userId = _currentUserService.UserId;
@@ -51,7 +51,8 @@ namespace MovieShopMVC.Controllers
             return View(user);
         }
 
-      
+
+
         public async Task<IActionResult> EditProfile()
         {
             return View();

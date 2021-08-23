@@ -41,21 +41,34 @@ namespace Infrastructure.Repositories
            // throw new NotImplementedException();
         }
 
+        //public async Task<User> GetAccountbyId(int userId)
+        //{
+        //    var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
+        //    return user;
+        //}
+
         public async Task<User> GetProfile(int userId)
         {
             var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
             return user;
         }
 
-        public Task<User> EditProfile()
-        {
-            throw new NotImplementedException();
-        }
 
-        public Task<User> BuyMovie()
-        {
-            throw new NotImplementedException();
-            //add movie to purchased..
-        }
+        //public Task<User> EditProfile()
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public Task<User> BuyMovie()
+        //{
+        //    throw new NotImplementedException();
+        //    //add movie to purchased..
+        //}
+
+        //public Task<User> GetAccount()
+        //{
+        //    throw new NotImplementedException();
+        //    //we are going to use EfRepository 
+        //}
     }
 }

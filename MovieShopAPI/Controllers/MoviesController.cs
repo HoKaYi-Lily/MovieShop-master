@@ -42,6 +42,14 @@ namespace MovieShopAPI.Controllers
         }
 
         [HttpGet]
+        public IActionResult Loadview()
+        {
+            //do not know what is this get /api/Movies for...
+            return Ok();
+        }
+
+
+        [HttpGet]
         [Route("Details/{id}")]
         public async Task<IActionResult> Details(int id)
         {

@@ -22,6 +22,21 @@ namespace Infrastructure.Services
             _userRepository = userRepository;
         }
 
+
+        public async Task<ProfileResponseModel> GetProfile(int userId)
+        {
+            var user = await _userRepository.GetProfile(userId);
+
+            var ProfileResponseModel = new ProfileResponseModel
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email
+            };
+            return ProfileResponseModel;
+        }
+
         public async Task<IEnumerable<MovieCardResponseModel>> GetFavoriteMovies(int userId)
         {
             var user = await _userRepository.GetFavoriteMovies(userId);
@@ -41,19 +56,7 @@ namespace Infrastructure.Services
             return movieCards;
         }
 
-        public async Task<ProfileResponseModel> GetProfile(int userId)
-        {
-            var user = await _userRepository.GetProfile(userId);
-
-            var ProfileResponseModel = new ProfileResponseModel
-            {
-                Id = user.Id,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Email = user.Email
-            };
-            return ProfileResponseModel;
-        }
+       
 
         public async Task<IEnumerable<MovieCardResponseModel>> GetPurchasedMovies(int userId)
         {
@@ -166,6 +169,39 @@ namespace Infrastructure.Services
                                                                         iterationCount: 10000,
                                                                         numBytesRequested: 256 / 8));
             return hashed;
+        }
+
+        public async Task<UserResponseModel> GetUserById(int id)
+        {
+            var user = await _userRepository.GetByIdAsync(id);
+
+            var userResponseModel = new UserResponseModel()
+            {
+                Id = user.Id,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                DateOfBirth = user.DateOfBirth
+            };
+            return userResponseModel;
+        }
+
+        public async Task<IEnumerable<UserResponseModel>> GetAllUsers()
+        {
+            var users = await _userRepository.ListAllAsync();
+            var userList = new List<UserResponseModel>();
+            foreach (var user in users)
+            {
+                userList.Add(new UserResponseModel
+                {
+                    Id = user.Id,
+                    Email = user.Email,
+                    FirstName = user.FirstName,
+                    LastName = user.LastName,
+                    DateOfBirth = user.DateOfBirth
+                });
+            }
+            return userList;
         }
     }
 }

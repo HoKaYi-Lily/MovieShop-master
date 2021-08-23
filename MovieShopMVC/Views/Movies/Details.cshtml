@@ -27,7 +27,7 @@
                         @foreach (var genre in Model.Genres)
                         {
                             <a class="badge badge-pill badge-dark m1-1"
-                               asp-controller="Genres" asp-action="Index">
+                               asp-controller="Genres" asp-action="Details" asp-route-id="@genre.Id">
                                 @genre.Name
                             </a>
                             //orginally controller directory should go action="Details" asp-route-id="@genre,Id"

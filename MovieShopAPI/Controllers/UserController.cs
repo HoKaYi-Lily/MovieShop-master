@@ -38,14 +38,14 @@ namespace MovieShopAPI.Controllers
             //400 return error 500 internal error 200 ok
         }
 
-        [Route("GetFavorites")]
+        [Route("{id:int}/GetFavorites")]
         [HttpGet]
-        public async Task<IActionResult> GetFavorites([FromBody] int userId)
+        public async Task<IActionResult> GetFavorites( int id)
         {
            // var userId = _currentUserService.UserId;
-            var movieCards = await _userService.GetFavoriteMovies(userId);
+            var movieCards = await _userService.GetFavoriteMovies(id);
             return Ok(movieCards);
         }
-
+        
     }
 }

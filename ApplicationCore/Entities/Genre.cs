@@ -21,7 +21,6 @@ namespace ApplicationCore.Entities
         //we need this for many to many relationships
         //didn't make a table fore genre, data annotation 
 
-
     }
 }
 

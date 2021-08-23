@@ -1,4 +1,5 @@
 ﻿using ApplicationCore.Models;
+using ApplicationCore.RepositoryInterfaces;
 using ApplicationCore.ServiceInterface;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -17,10 +18,41 @@ namespace MovieShopAPI.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IUserService _userService;
-
-        public AccountController(IUserService userService)
+        private readonly IUserRepository _userRepository;
+        public AccountController(IUserService userService, IUserRepository userRepository)
         {
             _userService = userService;
+            _userRepository = userRepository;
+        }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return Ok();
+        }
+
+        [HttpGet]
+        [Route("{id:int}")]
+        public async Task<IActionResult> GetAccountById(int id)
+        {
+            var user = await _userRepository.GetByIdAsync(id);
+            if (user == null)
+            {
+                NotFound($"Account dosen't exist for id: {id}");
+            }
+            return Ok(user);
+        }
+
+        [HttpGet]
+        [Route("GetAllAccounts")]
+        public async Task<IActionResult> GetAllAccounts()
+        {
+            var users = await _userService.GetAllUsers();
+            if (users == null)
+            {
+                NotFound("No users exist");
+            }
+            return Ok(users);
         }
 
         [HttpPost]

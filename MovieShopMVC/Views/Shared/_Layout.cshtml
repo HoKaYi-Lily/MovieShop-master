@@ -39,14 +39,45 @@
                                     <button type="button" class="btn btn-link">
                                         <a asp-controller="Account" asp-action="Login">Login </a>
                                     </button> 
-                                 }
+                                }
                                 else
                                 {
 
                                     <a class="nav-link active" aria-current="page" href="#"> Welcome back, @_currentUserService.FullName</a>
-                                 } 
+                                }
                              }
 
+                        </li>
+                        <li>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Action
+                                </button>
+                                <div class="dropdown-menu">
+
+                                    @{ 
+                                        if (userId == 0)
+                                        {
+                                          <a class="dropdown-item" asp-controller="Account" asp-action="Register">
+                                                Register
+                                          </a>
+                                           <a class="dropdown-item" asp-controller="Home" asp-action="Index">
+                                              Home
+                                           </a>
+                                            <a class="dropdown-item" asp-controller="Privacy">
+                                                Privacy
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                                <a class="dropdown-item" asp-controller="User" asp-action="getprofile">User Profile</a>
+                                                <a class="dropdown-item" asp-controller="User" asp-action="GetFavorites">Favorites</a>
+                                                <a class="dropdown-item"  asp-controller="User" asp-action="GetAllPurchases">Purchases</a>
+                                                <a class="dropdown-item"  asp-controller="Account" asp-action="Logout"> Logout</a>
+                                            }
+                                        }
+                                </div>
+                            </div>
                         </li>
                     </ul>
                 </div>
