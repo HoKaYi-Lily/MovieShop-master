@@ -51,6 +51,13 @@ namespace MovieShopAPI
             services.AddScoped<ICastService, CastService>();
             services.AddScoped<IGenreService, GenreService>();
             services.AddScoped<IAsyncRepository<Genre>, EfRepository<Genre>>();
+            services.AddScoped<IGenreRepository, GenreRepository>();
+
+            services.AddScoped<IReviewRepository, ReviewRepository>();
+            services.AddScoped<IReviewService, ReviewService>();
+            services.AddScoped<IFavoriteRepository, FavoriteRepository>();
+            services.AddScoped<IPurchaseRepository, PurchaseRepository>();
+
             services.AddMemoryCache();
             services.AddScoped<ICurrentUserService, CurrentUserService>();
             //genre services is using in memory caching so we need that one

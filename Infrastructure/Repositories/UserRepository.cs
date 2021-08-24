@@ -30,7 +30,7 @@ namespace Infrastructure.Repositories
                 .FirstOrDefaultAsync(u => u.Id == userId);
             //it connect to user>favourite>movie then use userId what>>?? why how, do they locate the userid first, or connect all graph first
             return user;
-        
+
         }
 
         public async Task<User> GetPurchasedMovies(int userId)
@@ -38,7 +38,7 @@ namespace Infrastructure.Repositories
             var user = await _dbContext.Users.Include(u => u.Purchases).ThenInclude(u => u.Movie)
                 .FirstOrDefaultAsync(u => u.Id == userId);
             return user;
-           // throw new NotImplementedException();
+            // throw new NotImplementedException();
         }
 
         //public async Task<User> GetAccountbyId(int userId)
@@ -53,6 +53,23 @@ namespace Infrastructure.Repositories
             return user;
         }
 
+        public async Task<User> GetUserFavoriteById(int id)
+        {
+            var user = await _dbContext.Users.Include(u => u.Favorites).ThenInclude(u => u.Movie).FirstOrDefaultAsync(u => u.Id == id);
+            return user;
+        }
+
+        public async Task<User> GetUserPurchaseById(int id)
+        {
+            var user = await _dbContext.Users.Include(u => u.Purchases).ThenInclude(u => u.Movie).FirstOrDefaultAsync(u => u.Id == id);
+            return user;
+        }
+
+        public async Task<User> GetReviewsById(int id)
+        {
+            var user = await _dbContext.Users.Include(u => u.Reviews).FirstOrDefaultAsync(u => u.Id == id);
+            return user;
+        }
 
         //public Task<User> EditProfile()
         //{

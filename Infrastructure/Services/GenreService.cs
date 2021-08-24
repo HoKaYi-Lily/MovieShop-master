@@ -13,7 +13,8 @@ namespace Infrastructure.Services
 {
     public class GenreService : IGenreService
     {
-        private readonly IAsyncRepository<Genre> _genreRepository;
+        private readonly IGenreRepository _genreRepository;
+        //IAsyncRepository<Genre>
         private readonly IMemoryCache _memoryCache;
 
         // Caching....
@@ -21,7 +22,7 @@ namespace Infrastructure.Services
         // key/value
         // genres/List<Genres>  expiration time
         //
-        public GenreService(IAsyncRepository<Genre> genreRepository, IMemoryCache memoryCache)
+        public GenreService(IGenreRepository genreRepository, IMemoryCache memoryCache)
         {
             _genreRepository = genreRepository;
             _memoryCache = memoryCache;
@@ -58,20 +59,23 @@ namespace Infrastructure.Services
                 Id = genre.Id,
                 Name = genre.Name
             };
-
-            //genreDetails.Movies = new List<MovieCardResponseModel>();
-            //foreach (var movie in genre.Movies)
-            //{
-            //    genreDetails.Movies.Add(new MovieCardResponseModel
-            //    {
-            //        Id = movie.Id,
-            //        Title = movie.Title,
-            //        PosterUrl = movie.PosterUrl
-            //    });
-            //}
-
             return genreDetails;
+        }
 
+        public async Task<IEnumerable<MovieCardResponseModel>> GetAllMovies(int id)
+        {
+            var genre = await _genreRepository.GetMoviesByGenreId(id);
+            var movieCards = new List<MovieCardResponseModel>();
+            foreach (var movie in genre.Movies)
+            {
+                movieCards.Add(new MovieCardResponseModel { Id = movie.Id, PosterUrl = movie.PosterUrl, Title = movie.Title });
+            }
+            return movieCards;
+        }
+
+        public async Task<Genre> GetGenreById(int id)
+        {
+            return await _genreRepository.GetByIdAsync(id);
         }
     }
 }

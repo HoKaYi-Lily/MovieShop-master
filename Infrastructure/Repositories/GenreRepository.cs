@@ -21,9 +21,9 @@ namespace Infrastructure.Repositories
         {
             var genre = await _dbContext.Genres.Include(g => g.Movies).FirstOrDefaultAsync(g => g.Id == id);
 
-           // var genre = await _dbContext.Genres.Include(g => g.MovieGenre).Include(g => g.Movies).FirstOrDefaultAsync(g => g.Id == id);
+            // var genre = await _dbContext.Genres.Include(g => g.MovieGenre).Include(g => g.Movies).FirstOrDefaultAsync(g => g.Id == id);
 
-        
+
 
             if (genre == null)
             {
@@ -31,6 +31,11 @@ namespace Infrastructure.Repositories
             }
             //genre was not reading in the data>>??
             return genre;
+        }
+
+        public async Task<Genre> GetMoviesByGenreId(int id)
+        {
+            return await _dbContext.Genres.Include(g => g.Movies).FirstOrDefaultAsync(g => g.Id == id);
         }
     }
 }

@@ -43,9 +43,14 @@ namespace MovieShopMVC
             services.AddScoped<ICastService, CastService>();
             services.AddScoped<IGenreService, GenreService>();
             services.AddScoped<IAsyncRepository<Genre>, EfRepository<Genre>>();
+            services.AddScoped<IGenreRepository, GenreRepository>();
             services.AddMemoryCache();
             services.AddScoped<ICurrentUserService, CurrentUserService>();
 
+            services.AddScoped<IReviewRepository, ReviewRepository>();
+            services.AddScoped<IReviewService, ReviewService>();
+            services.AddScoped<IFavoriteRepository, FavoriteRepository>();
+            services.AddScoped<IPurchaseRepository, PurchaseRepository>();
 
             services.AddDbContext<MovieShopDbContext>(
                 options => options.UseSqlServer(Configuration.GetConnectionString("MovieShopDbConnection"))
@@ -67,9 +72,9 @@ namespace MovieShopMVC
         {
             if (env.IsDevelopment())
             {
-                app.UseMovieShopExceptionMiddleware();
-                 //app.UseDeveloperExceptionPage();
-                //app.UseExceptionHandler("/Home/Error");
+              //  app.UseMovieShopExceptionMiddleware();
+                 app.UseDeveloperExceptionPage();
+               // app.UseExceptionHandler("/Home/Error");
             }
             else
             {

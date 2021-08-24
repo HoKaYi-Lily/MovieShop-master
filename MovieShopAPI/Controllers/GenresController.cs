@@ -21,11 +21,23 @@ namespace MovieShopAPI.Controllers
 
 
         [HttpGet]
-        [Route("Index")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> GetGenres()
         {
             var genres = await _genreService.GetAllGenres();
+
+            if (genres == null)
+            {
+                return NotFound("No genre Found!");
+            }
             return Ok(genres);
         }
+
+        //[HttpGet]
+        //[Route("Index")]
+        //public async Task<IActionResult> Index()
+        //{
+        //    var genres = await _genreService.GetAllGenres();
+        //    return Ok(genres);
+        //}
     }
 }

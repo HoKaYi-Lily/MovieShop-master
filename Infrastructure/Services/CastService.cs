@@ -47,5 +47,22 @@ namespace Infrastructure.Services
             return castResponsesModel;
 
         }
+
+        public async Task<CastResponseModel> GetCastById(int id)
+        {
+            var x = 0;
+            x += 1;
+            var cast = await _castRepository.GetByIdAsync(id);
+
+            var castDetails = new CastResponseModel()
+            {
+                Id = cast.Id,
+                Name = cast.
+                Gender = cast.Gender,
+                ProfilePath = cast.ProfilePath,
+            };
+
+            return castDetails;
+        }
     }
 }

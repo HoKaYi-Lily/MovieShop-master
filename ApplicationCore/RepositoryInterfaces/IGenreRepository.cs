@@ -9,5 +9,6 @@ namespace ApplicationCore.RepositoryInterfaces
 {
     public interface IGenreRepository:IAsyncRepository<Genre>
     {
+        Task<Genre> GetMoviesByGenreId(int id);
     }
 }

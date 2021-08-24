@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ApplicationCore.Entities;
+using ApplicationCore.Exceptions;
 using ApplicationCore.Models;
 using ApplicationCore.RepositoryInterfaces;
 using ApplicationCore.ServiceInterface;
@@ -18,54 +20,103 @@ namespace Infrastructure.Services
             //giving the getted instance to the private_movierepository variable with DI's help
         }
 
-        public async Task<MovieDetailResponseModel> GetMovieDetails(int id)
+        public async Task<MovieCardResponseModel> CreateMovie(MovieCreateRequestModel movie)
         {
-            //call this method from movie controller 
-            var movie = await _movieRepository.GetByIdAsync(id);
-            //return type should be MovieDetailresponsemodel, but we have entity return now, 
-            //so we have to map it
-
-            var movieDetailsModel = new MovieDetailResponseModel
+            var newMovie = await _movieRepository.AddAsync(new Movie
             {
-                Id = movie.Id,
                 Title = movie.Title,
+                PosterUrl = movie.PosterUrl,
+                BackdropUrl = movie.BackdropUrl,
                 Overview = movie.Overview,
                 Tagline = movie.Tagline,
                 Budget = movie.Budget,
                 Revenue = movie.Revenue,
                 ImdbUrl = movie.ImdbUrl,
                 TmdbUrl = movie.TmdbUrl,
-                PosterUrl = movie.PosterUrl,
-                BackdropUrl = movie.BackdropUrl,
-                OriginalLanguage = movie.OriginalLanguage,
                 ReleaseDate = movie.ReleaseDate,
                 RunTime = movie.RunTime,
                 Price = movie.Price,
-                Rating = movie.Rating
-                //moviedetailresponsemodel have the list<moviedetailrespinsemodel> for casts and genres
+            });
+
+            return new MovieCardResponseModel
+            {
+                Id = newMovie.Id,
+                Budget = newMovie.Budget.GetValueOrDefault(),
+                PosterUrl = newMovie.PosterUrl,
+                Title = newMovie.Title,
+
+            };
+        }
+
+
+
+        public async Task<MovieDetailsResponseModel> GetMovieDetails(int id)
+        {
+            var movie = await _movieRepository.GetByIdAsync(id);
+            var movieDetailsModel = new MovieDetailsResponseModel
+            {
+                Id = movie.Id,
+                Title = movie.Title,
+                Rating = movie.Rating,
+                Budget = movie.Budget,
+                ReleaseDate = movie.ReleaseDate,
+                RunTime = movie.RunTime,
+                Revenue = movie.Revenue,
+                Price = movie.Price,
+                Overview = movie.Overview,
+                Tagline = movie.Tagline,
+                ImdbUrl = movie.ImdbUrl,
+                TmdbUrl = movie.TmdbUrl,
+                PosterUrl = movie.PosterUrl,
+                BackdropUrl = movie.BackdropUrl,
+                OriginalLanguage = movie.OriginalLanguage,
+
             };
             movieDetailsModel.Casts = new List<CastResponseModel>();
-
             foreach (var cast in movie.MovieCasts)
             {
-                movieDetailsModel.Casts.Add(new CastResponseModel
-                {
-                    Id = cast.CastId,
-                    Name = cast.Cast.Name,
-                    Gender = cast.Cast.Gender,
-                    ProfilePath = cast.Cast.ProfilePath,
-                    Character = cast.Character
-                }); //need to fill up remaining properties 
+                movieDetailsModel.Casts.Add(new CastResponseModel { Id = cast.CastId, Name = cast.Cast.Name, Character = cast.Character, Gender = cast.Cast.Gender, ProfilePath = cast.Cast.ProfilePath });
             }
 
             movieDetailsModel.Genres = new List<GenreResponseModel>();
-
             foreach (var genre in movie.Genres)
             {
                 movieDetailsModel.Genres.Add(new GenreResponseModel { Id = genre.Id, Name = genre.Name });
             }
-
             return movieDetailsModel;
+
+        }
+
+        public async Task<List<MovieReviewsModel>> GetMovieReviews(int id)
+        {
+            var movie = await _movieRepository.GetMovieReviews(id);
+
+            var movieReviews = new List<MovieReviewsModel>();
+            foreach (var review in movie.Reviews)
+            {
+                movieReviews.Add(new MovieReviewsModel { UserId = review.UserId, ReviewText = review.ReviewText, Rating = review.Rating });
+            }
+
+            return movieReviews;
+        }
+
+        public async Task<List<MovieCardResponseModel>> GetTopRatingMovies()
+        {
+            var dbMovies = await _movieRepository.GetTopRatedMovies();
+
+            var movies = new List<MovieCardResponseModel>();
+            foreach (var movie in dbMovies)
+            {
+                movies.Add(new MovieCardResponseModel
+                {
+                    Id = movie.Id,
+                    Budget = movie.Budget.GetValueOrDefault(),
+                    PosterUrl = movie.PosterUrl,
+                    Title = movie.Title,
+                    Rating = movie.Rating,
+                });
+            }
+            return movies;
         }
 
         public async Task<List<MovieCardResponseModel>> GetTopRevenueMovies()
@@ -84,6 +135,56 @@ namespace Infrastructure.Services
             return movieCards;
          }
 
+
+        public async Task<MovieDetailsResponseModel> UpdateMovie(MovieUpdateRequestModel movie)
+        {
+            var dbMovie = await _movieRepository.GetByIdAsync(movie.Id);
+            if (dbMovie == null)
+            {
+                throw new ConflictException("No movie exists");
+            }
+
+            dbMovie.Title = movie.Title;
+            dbMovie.PosterUrl = movie.PosterUrl;
+            dbMovie.BackdropUrl = movie.BackdropUrl;
+            dbMovie.Overview = movie.Overview;
+            dbMovie.Tagline = movie.Tagline;
+            dbMovie.Budget = movie.Budget;
+            dbMovie.Revenue = movie.Revenue;
+            dbMovie.ImdbUrl = movie.ImdbUrl;
+            dbMovie.TmdbUrl = movie.TmdbUrl;
+            dbMovie.ReleaseDate = movie.ReleaseDate;
+            dbMovie.RunTime = movie.RunTime;
+            dbMovie.Price = movie.Price;
+
+            var updatedDbMovie = await _movieRepository.UpdateAsync(dbMovie);
+
+            return await GetMovieDetails(updatedDbMovie.Id);
+        }
+
+
+        //----
+        public async Task<List<MovieCardResponseModel>> GetfilterGenres(int id)
+        {
+            var movies = await _movieRepository.GetMoviesByGenre(id);
+
+            var movieCards = new List<MovieCardResponseModel>();
+
+            foreach (var movie in movies)
+            {
+                foreach (var genre in movie.Genres)
+                {
+                    if (genre.Id == id)
+                    {
+                        movieCards.Add(new MovieCardResponseModel { Id = movie.Id, Budget = movie.Budget.GetValueOrDefault(), PosterUrl = movie.PosterUrl, Title = movie.Title });
+                    }
+                }
+            }
+
+            return movieCards;
+
+        }
+        //---
         //public getdetails() {}
     }
 }

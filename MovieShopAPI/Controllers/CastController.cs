@@ -19,12 +19,25 @@ namespace MovieShopAPI.Controllers
             _castService = castService;
         }
       
+        //[HttpGet]
+        //[Route("Details/{id}")]
+        //public async Task<IActionResult> Details(int id)
+        //{
+        //    var details = await _castService.GetCastDetails(id);
+        //    return Ok(details);
+        //}
+
         [HttpGet]
-        [Route("Details/{id}")]
-        public async Task<IActionResult> Details(int id)
+        [Route("{id:int}")]
+        public async Task<IActionResult> GetCast(int id)
         {
-            var details = await _castService.GetCastDetails(id);
-            return Ok(details);
+            var cast = await _castService.GetCastById(id);
+
+            if (cast == null)
+            {
+                return NotFound($"No cast Found for that {id}");
+            }
+            return Ok(cast);
         }
 
     }

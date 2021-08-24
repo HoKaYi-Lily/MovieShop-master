@@ -41,13 +41,6 @@ namespace MovieShopAPI.Controllers
             // along with data you also need to return HTTP status code
         }
 
-        [HttpGet]
-        public IActionResult Loadview()
-        {
-            //do not know what is this get /api/Movies for...
-            return Ok();
-        }
-
 
         [HttpGet]
         [Route("Details/{id}")]
@@ -55,6 +48,63 @@ namespace MovieShopAPI.Controllers
         {
             var movieDetails = await _movieService.GetMovieDetails(id);
             return Ok(movieDetails);
+        }
+
+
+        [HttpGet]
+        [Route("genre/{id:int}")]
+        public async Task<IActionResult> GetMoviesByGenre(int id)
+        {
+            var movie = await _movieService.GetfilterGenres(id);
+
+            if (movie == null)
+            {
+                return NotFound($"No Movie Found for that {id}");
+            }
+
+            return Ok(movie);
+        }
+
+        [HttpGet]
+        [Route("{id:int}")]
+        public async Task<IActionResult> GetMovie(int id)
+        {
+            var movie = await _movieService.GetMovieDetails(id);
+
+            if (movie == null)
+            {
+                return NotFound($"No Movie Found for that {id}");
+            }
+            return Ok(movie);
+        }
+
+        [HttpGet]
+        [Route("toprated")]
+        public async Task<IActionResult> GetTopRatingMovies()
+        {
+            var movies = await _movieService.GetTopRatingMovies();
+
+            if (!movies.Any())
+            {
+                return NotFound("No Movie Found");
+            }
+
+            return Ok(movies);
+        }
+
+        [HttpGet]
+        [Route("{id:int}/reviews")]
+        public async Task<IActionResult> GetMovieReview(int id)
+        {
+            var movie = await _movieService.GetMovieReviews(id);
+
+            if (movie == null)
+            {
+                return NotFound("No Movies Found");
+            }
+
+            return Ok(movie);
+
         }
 
     }
