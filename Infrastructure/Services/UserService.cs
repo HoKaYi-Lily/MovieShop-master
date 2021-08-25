@@ -259,19 +259,35 @@ namespace Infrastructure.Services
                 throw new ConflictException("The movie arleady added!");
             }
 
-            await _favoriteRepository.AddAsync(new Favorite
-            {
-                UserId = model.UserId,
-                MovieId = model.MovieId
-            });
-
-            var addFavoriteResonse = new FavoriteResponseModel
-            {
-                UserId = model.UserId,
-                MovieId = model.MovieId
+            var favorite = new Favorite 
+            { 
+                MovieId = model.MovieId, 
+                UserId = model.UserId 
             };
+            var createdFavorite = await _favoriteRepository.AddAsync(favorite);
+            var favoriteResponse = new FavoriteResponseModel 
+            { 
+                Id = createdFavorite.Id, 
+                MovieId = createdFavorite.MovieId, 
+                UserId = createdFavorite.UserId 
+            };
+            return favoriteResponse;
 
-            return addFavoriteResonse;
+
+            //var favorite = await _favoriteRepository.AddAsync(new Favorite
+            //{
+            //    UserId = model.UserId,
+            //    MovieId = model.MovieId
+            //});
+
+            //var addFavoriteResonse = new FavoriteResponseModel
+            //{
+                
+            //    UserId = favorite.UserId,
+            //    MovieId = favorite.MovieId
+            //};
+
+            //return addFavoriteResonse;
         }
 
         public async Task<UnFavoriteResponseModel> removefromFavorite(UnFavoriteRequestModel model)
@@ -322,6 +338,12 @@ namespace Infrastructure.Services
         public async Task<MovieCardResponseModel> GetFavoriteMovieDetail(int id, int movieId)
         {
             var dbFavorite = await _favoriteRepository.GetFavorite(id, movieId);
+            if (dbFavorite == null)
+            {
+                var movie = new MovieCardResponseModel();
+                return movie; 
+               // throw new Exception("favourite Moviedetail not found");
+            }
             var movieCardResponseModel = new MovieCardResponseModel
             {
                 Id = dbFavorite.Id,

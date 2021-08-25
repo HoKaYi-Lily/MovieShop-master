@@ -34,9 +34,12 @@ namespace Infrastructure.Repositories
             return entity;
         }
 
-        public Task<T> DeleteAsync(T entity)
+        public async Task<T> DeleteAsync(T entity)
         {
-            throw new NotImplementedException();
+            _dbContext.Set<T>().Remove(entity);
+            await _dbContext.SaveChangesAsync();
+            //inserting and commiting to database
+            return entity;
         }
         //make virtual in base class means we can override it, not neccessarily have to 
         public virtual async Task<T> GetByIdAsync(int id)

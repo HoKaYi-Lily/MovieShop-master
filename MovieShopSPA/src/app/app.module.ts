@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import {HttpClientModule} from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +16,7 @@ import { TopratedComponent } from './movies/toprated/toprated.component';
 import { CreateMovieComponent } from './admin/create-movie/create-movie.component';
 import { CreateCastComponent } from './admin/create-cast/create-cast.component';
 import { MovieDetailsComponent } from './movies/movie-details/movie-details.component';
+import { MovieCardComponent } from './shared/components/movie-card/movie-card.component';
 
 @NgModule({
   declarations: [
@@ -30,11 +32,13 @@ import { MovieDetailsComponent } from './movies/movie-details/movie-details.comp
     TopratedComponent,
     CreateMovieComponent,
     CreateCastComponent,
-    MovieDetailsComponent
+    MovieDetailsComponent,
+    MovieCardComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

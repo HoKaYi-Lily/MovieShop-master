@@ -20,6 +20,20 @@ namespace MovieShopAPI.Controllers
         {
             _movieService = movieService;
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllMovies()
+        {
+            var movies = await _movieService.GetAllMovies();
+            if (!movies.Any())
+            {
+                NotFound("No movies exist");
+            }
+            return Ok(movies);
+        }
+
+
         // api/movies/toprevenue
         [Route("toprevenue")]
         [HttpGet]

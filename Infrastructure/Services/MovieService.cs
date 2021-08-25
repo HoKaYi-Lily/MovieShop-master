@@ -99,6 +99,24 @@ namespace Infrastructure.Services
 
             return movieReviews;
         }
+        public async Task<List<MovieCardResponseModel>> GetAllMovies()
+        {
+            var movies = await _movieRepository.ListAllAsync();
+            var movieList = new List<MovieCardResponseModel>();
+
+            foreach (var movie in movies)
+            {
+                movieList.Add(new MovieCardResponseModel
+                {
+                    Id = movie.Id,
+                    Title = movie.Title,
+                    PosterUrl = movie.PosterUrl,
+                    Rating = movie.Rating
+                });
+            }
+            return movieList;
+        }
+
 
         public async Task<List<MovieCardResponseModel>> GetTopRatingMovies()
         {
