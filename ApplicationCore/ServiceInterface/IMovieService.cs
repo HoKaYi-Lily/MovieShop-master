@@ -22,3 +22,4 @@ namespace ApplicationCore.ServiceInterface
         Task<List<MovieReviewsModel>> GetMovieReviews(int id);
     }
 }
+ 

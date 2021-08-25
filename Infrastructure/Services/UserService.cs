@@ -42,7 +42,7 @@ namespace Infrastructure.Services
             };
             return ProfileResponseModel;
         }
-
+        //also do not use getuserfavorite, use getfavorite movies instead, their return type model is very different
         public async Task<IEnumerable<MovieCardResponseModel>> GetFavoriteMovies(int userId)
         {
             var user = await _userRepository.GetFavoriteMovies(userId);
@@ -232,6 +232,7 @@ namespace Infrastructure.Services
             return purchase;
         }
 
+        //do not use this one, use the other get purchases movies
         public async Task<List<UserPurchaseModel>> GetPurchaseById(int id)
         {
             var user = await _userRepository.GetUserPurchaseById(id);

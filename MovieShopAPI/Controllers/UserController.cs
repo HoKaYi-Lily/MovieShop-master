@@ -122,7 +122,7 @@ namespace MovieShopAPI.Controllers
         [Route("{id:int}/purchases")]
         public async Task<IActionResult> GetUserPurchases(int id)
         {
-            var userPurchases = await _userService.GetPurchaseById(id);
+            var userPurchases = await _userService.GetPurchasedMovies(id);
 
             if (!userPurchases.Any())
             {
@@ -135,7 +135,7 @@ namespace MovieShopAPI.Controllers
         [Route("{id:int}/favorites")]
         public async Task<IActionResult> GetUserfavorites(int id)
         {
-            var userFavorites = await _userService.GetFavoriteById(id);
+            var userFavorites = await _userService.GetFavoriteMovies(id);
 
             if (!userFavorites.Any())
             {
