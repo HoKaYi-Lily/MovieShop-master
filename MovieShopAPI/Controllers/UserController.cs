@@ -1,5 +1,6 @@
 ﻿using ApplicationCore.Models;
 using ApplicationCore.ServiceInterface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -118,6 +119,7 @@ namespace MovieShopAPI.Controllers
             return Ok(status);
         }
 
+        [Authorize]
         [HttpGet]
         [Route("{id:int}/purchases")]
         public async Task<IActionResult> GetUserPurchases(int id)
