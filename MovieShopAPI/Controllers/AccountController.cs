@@ -74,36 +74,38 @@ namespace MovieShopAPI.Controllers
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequestModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return NotFound("No User Found");
-            }
             var user = await _userService.Login(model);
-            if (user == null)
-            {
-                throw new Exception("Invalid Login");
-            }
+            if (user == null) return Unauthorized();
+            //if (!ModelState.IsValid)
+            //{
+            //    return NotFound("No User Found");
+            //}
+            //var user = await _userService.Login(model);
+            //if (user == null)
+            //{
+            //    throw new Exception("Invalid Login");
+            //}
             // Cookies based authentication....
             // store some information in the Cookies, Authentication cookie... Claims
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.GivenName, user.FirstName),
-                new Claim(ClaimTypes.Surname, user.LastName),
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
-            };
+            //var claims = new List<Claim>
+            //{
+            //    new Claim(ClaimTypes.Email, user.Email),
+            //    new Claim(ClaimTypes.GivenName, user.FirstName),
+            //    new Claim(ClaimTypes.Surname, user.LastName),
+            //    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+            //};
 
-            // Identity class... and Principle
-            // go to an bar => check your identity => Driving License
-            // go to Airport => check your passport
-            // Create a Movie => claim with role value as Admin
+            //// Identity class... and Principle
+            //// go to an bar => check your identity => Driving License
+            //// go to Airport => check your passport
+            //// Create a Movie => claim with role value as Admin
 
-            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            //var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-            // create the cookies
-            // HttpContext
+            //// create the cookies
+            //// HttpContext
 
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
+            //await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity));
 
             //do we still need the stuff above???
 

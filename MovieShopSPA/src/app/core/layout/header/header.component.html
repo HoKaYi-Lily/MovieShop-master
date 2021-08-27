@@ -1,3 +1,28 @@
-<h2>
-    Movie Shop Header, Use bootstrap NavBar later
-</h2>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Movie Shop </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+   
+        <ng-container *ngIf="!isLoggedIn">
+            <li class="nav-item active">
+                <a class="btn btn-outline-primary rounded-pill" [routerLink]="['/account/login']">Login </a>
+              </li>
+              <li class="nav-item">
+                <a class="btn btn-outline-primary rounded-pill" [routerLink]="['/account/register']">Register</a>
+              </li>
+             
+        </ng-container>
+       <ng-container *ngIf="isLoggedIn">
+            <!--FirstName + Last Name-->
+            <!--Display Logut Button-->
+            <li class="nav-item active">
+                <a class="btn btn-outline-primary rounded-pill" [routerLink]="['/account/login']">Logout </a>
+              </li>
+       </ng-container>
+     
+  
+    </div>
+  </nav>
